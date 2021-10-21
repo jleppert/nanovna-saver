@@ -33,7 +33,7 @@ import sys
 from PyQt5 import QtWidgets, QtCore
 
 from NanoVNASaver.About import VERSION, INFO
-from NanoVNASaver.NanoVNASaver import NanoVNASaver
+from NanoVNASaver.NanoVNASaver_command import NanoVNASaver
 
 
 def main():
@@ -46,6 +46,14 @@ def main():
                         help="File to write debug logging output to")
     parser.add_argument("--version", action="version",
                         version=f"NanoVNASaver {VERSION}")
+    parser.add_argument("-o", "--output", type=str,
+                    help="output location (folder)")
+    parser.add_argument("-f", "--start", type=int,
+                    help="start frequency in Hz")
+    parser.add_argument("-t", "--stop", type=int,
+                    help="stop frequency in Hz")
+    parser.add_argument("-i", "--infinite", action="store_true",
+                    help="infinite saving 2port touchstone files, otherwise once")
     args = parser.parse_args()
 
     console_log_level = logging.WARNING
@@ -74,15 +82,14 @@ def main():
 
     logger.info("Startup...")
 
-    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling,
-                                        True)
-    app = QtWidgets.QApplication(sys.argv)
+    #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling,                                    True)
+    #app = QtWidgets.QApplication(sys.argv)
     window = NanoVNASaver()
-    window.show()
-    try:
-        app.exec_()
-    except BaseException as exc:
-        logger.exception("%s", exc)
+    #window.show()
+    #try:
+    #    app.exec_()
+    #except BaseException as exc:
+    #    logger.exception("%s", exc)
 
 if __name__ == '__main__':
     main()
